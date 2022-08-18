@@ -7,6 +7,7 @@ import pygame as pg
 
 SIZE = (500, 500)
 CENTER = (SIZE[0]/2, SIZE[1]/2)
+
 class Snake(pg.sprite.Sprite):
 
     def __init__(self):
