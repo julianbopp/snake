@@ -8,27 +8,31 @@ import pygame as pg
 SIZE = (500, 500)
 CENTER = (SIZE[0]/2, SIZE[1]/2)
 
-class Snake(pg.sprite.Sprite):
+class SnakePart(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
+
         self.width = 10
         self.height = 10
         self.image = pg.Surface([self.width, self.height])
         self.image = self.image.convert()
         self.image.fill((200,200,200))
         self.rect = self.image.get_rect()
-        self.rect.x, self.rect.y = CENTER
+
+class Snake():
+
+    def __init__(self):
+        # create snake head
+        self.head = SnakePart()
+        self.head.rect.topleft = CENTER
 
         # create array used to store snake head and tail positions
         self.positions = []
-        self.positions.append((self.rect.x, self.rect.y))
-        print(self.positions)
-    
-    def draw(self):
-        for pos in self.positions:
-            return
 
+    def draw(self, screen):
+        allsprites = pg.sprite.RenderPlain(self.head)
+        allsprites.draw(screen)
 
 
 def main():
@@ -50,7 +54,6 @@ def main():
 
     # Prepare Game Objects
     snake = Snake();
-    allsprites = pg.sprite.RenderPlain((snake))
     clock = pg.time.Clock()
 
     # Main Loop
@@ -65,8 +68,7 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        allsprites.draw(screen)
-        #pg.draw.rect(screen, (200,200,200), snake.rect)
+        snake.draw(screen)
         pg.display.flip()
 
     pg.quit()
