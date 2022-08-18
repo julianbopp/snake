@@ -1,6 +1,8 @@
 from cmath import rect
+from email.mime import image
 import os
 from tkinter import CENTER
+from turtle import position
 import pygame as pg
 
 SIZE = (500, 500)
@@ -9,11 +11,22 @@ class Snake(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
-
         self.width = 10
         self.height = 10
-        self.rect = pg.Rect(CENTER[0], CENTER[1],self.width,self.height)
-        self.rect
+        self.image = pg.Surface([self.width, self.height])
+        self.image = self.image.convert()
+        self.image.fill((200,200,200))
+        self.rect = self.image.get_rect()
+        self.rect.x, self.rect.y = CENTER
+
+        # create array used to store snake head and tail positions
+        self.positions = []
+        self.positions.append((self.rect.x, self.rect.y))
+        print(self.positions)
+    
+    def draw(self):
+        for pos in self.positions:
+            return
 
 
 
@@ -51,7 +64,8 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        pg.draw.rect(screen, (200,200,200), snake.rect)
+        allsprites.draw(screen)
+        #pg.draw.rect(screen, (200,200,200), snake.rect)
         pg.display.flip()
 
     pg.quit()
