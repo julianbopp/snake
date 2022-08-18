@@ -1,12 +1,27 @@
+from cmath import rect
 import os
+from tkinter import CENTER
 import pygame as pg
+
+SIZE = (500, 500)
+CENTER = (SIZE[0]/2, SIZE[1]/2)
+class Snake(pg.sprite.Sprite):
+
+    def __init__(self):
+        pg.sprite.Sprite.__init__(self)
+
+        self.width = 10
+        self.height = 10
+        self.rect = pg.Rect(CENTER[0], CENTER[1],self.width,self.height)
+        self.rect
+
 
 
 def main():
 
     # Initialize
     pg.init()
-    screen = pg.display.set_mode((500, 500))
+    screen = pg.display.set_mode(SIZE)
     pg.display.set_caption("Snake")
     pg.mouse.set_visible(False)
 
@@ -20,7 +35,8 @@ def main():
     pg.display.flip()
 
     # Prepare Game Objects
-    # snake = Snake()
+    snake = Snake();
+    allsprites = pg.sprite.RenderPlain((snake))
     clock = pg.time.Clock()
 
     # Main Loop
@@ -35,7 +51,7 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        # snake.draw
+        pg.draw.rect(screen, (200,200,200), snake.rect)
         pg.display.flip()
 
     pg.quit()
