@@ -8,10 +8,28 @@ import pygame as pg
 SIZE = (500, 500)
 CENTER = (SIZE[0]/2, SIZE[1]/2)
 
+class Food():
+    
+    def __init__(self, xpos, ypos):
+        self.xpos = xpos
+        self.ypos = ypos
+
+        self.width = 10
+        self.height = 10
+        self.image = pg.Surface([self.width, self.height])
+        self.image = self.image.convert()
+        self.image.fill((255,000,000))
+        self.rect = self.image.get_rect()
+        
+
+
 class SnakePart(pg.sprite.Sprite):
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
+
+        self.xspeed = 0
+        self.yspeed = 0
 
         self.width = 10
         self.height = 10
@@ -28,11 +46,18 @@ class Snake():
         self.head.rect.topleft = CENTER
 
         # create array used to store snake head and tail positions
-        self.positions = []
+        self.snakeElements = []
+        self.snakeElements.append(self.head)
 
     def draw(self, screen):
-        allsprites = pg.sprite.RenderPlain(self.head)
+        allsprites = pg.sprite.RenderPlain(self.snakeElements)
         allsprites.draw(screen)
+
+    def grow(self, food):
+        newPart = SnakePart()
+        newPart.rect.topleft = food.rect.topleft
+        self.snakeElements.append(newPart)
+
 
 
 def main():
@@ -65,6 +90,15 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 going = False
+            if event.type == pg.K_w:
+                snake.yspeed = -10
+            if event.type == pg.K_a:
+                snake.xspeed = -10
+            if event.type == pg.K_s:
+                snake.yspeed = +10
+            if event.type == pg.K_d:
+                snake.yspeed = +10
+
 
         # Draw Everything
         screen.blit(background, (0, 0))
