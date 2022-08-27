@@ -49,19 +49,30 @@ class Snake():
 
         self.snakeElements.append(self.head)
         self.snakeElementsPos.append(self.head.rect.topleft)
-
+        self.allsprites = pg.sprite.RenderPlain(self.snakeElements)
+        self.grow()
         # speed
         self.xspeed = 0
         self.yspeed = 0
 
+
     def draw(self, screen):
-        allsprites = pg.sprite.RenderPlain(self.snakeElements)
-        allsprites.draw(screen)
+        self.allsprites.draw(screen)
         self.head.rect.move_ip(self.xspeed, self.yspeed)
         tmp = self.head
         for element in self.snakeElements:
-            element.rect.topleft = tmp.rect.topleft
-            tmp = element
+            if element != self.head:
+                element.rect.topleft = tmp.rect.topleft
+                tmp = element
+
+        print(self.snakeElements)
+
+    def grow(self):
+        newPart = SnakePart()
+        newPart.rect.topleft = self.snakeElements[-1].rect.topleft
+        newPart.rect.move_ip(10, 10)
+        self.snakeElements.append(newPart)
+        self.allsprites = pg.sprite.RenderPlain(self.snakeElements)
 
 
 
