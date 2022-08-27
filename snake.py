@@ -28,9 +28,6 @@ class SnakePart(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
 
-        self.xspeed = 0
-        self.yspeed = 0
-
         self.width = 10
         self.height = 10
         self.image = pg.Surface([self.width, self.height])
@@ -49,14 +46,14 @@ class Snake():
         self.snakeElements = []
         self.snakeElements.append(self.head)
 
+        # speed
+        self.xspeed = 0
+        self.yspeed = 0
+
     def draw(self, screen):
         allsprites = pg.sprite.RenderPlain(self.snakeElements)
         allsprites.draw(screen)
-
-    def grow(self, food):
-        newPart = SnakePart()
-        newPart.rect.topleft = food.rect.topleft
-        self.snakeElements.append(newPart)
+        self.head.rect.move_ip(self.xspeed, self.yspeed)
 
 
 
@@ -84,21 +81,26 @@ def main():
     # Main Loop
     going = True
     while going:
-        clock.tick(60)
+        clock.tick(10)
 
         # Handle Input Events
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 going = False
-            if event.type == pg.K_w:
-                snake.yspeed = -10
-            if event.type == pg.K_a:
-                snake.xspeed = -10
-            if event.type == pg.K_s:
-                snake.yspeed = +10
-            if event.type == pg.K_d:
-                snake.yspeed = +10
-
+            
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_w:
+                    snake.yspeed = -10
+                    snake.xspeed = + 0
+                if event.key == pg.K_a:
+                    snake.yspeed = + 0
+                    snake.xspeed = -10
+                if event.key == pg.K_s:
+                    snake.yspeed = +10
+                    snake.xspeed = + 0
+                if event.key == pg.K_d:
+                    snake.yspeed = + 0
+                    snake.xspeed = +10
 
         # Draw Everything
         screen.blit(background, (0, 0))
