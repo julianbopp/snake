@@ -43,8 +43,12 @@ class Snake():
         self.head.rect.topleft = CENTER
 
         # create array used to store snake head and tail positions
+        self.size = 1
         self.snakeElements = []
+        self.snakeElementsPos = []
+
         self.snakeElements.append(self.head)
+        self.snakeElementsPos.append(self.head.rect.topleft)
 
         # speed
         self.xspeed = 0
@@ -54,6 +58,10 @@ class Snake():
         allsprites = pg.sprite.RenderPlain(self.snakeElements)
         allsprites.draw(screen)
         self.head.rect.move_ip(self.xspeed, self.yspeed)
+        tmp = self.head
+        for element in self.snakeElements:
+            element.rect.topleft = tmp.rect.topleft
+            tmp = element
 
 
 
