@@ -1,4 +1,5 @@
 from audioop import reverse
+from curses import KEY_PPAGE
 import pygame as pg
 
 SIZE = (500, 500)
@@ -60,7 +61,12 @@ class Snake():
             tmp = self.snakeElements[i+1].rect.topleft
             self.snakeElements[i+1].rect.topleft = tmpPos
             tmpPos = tmp
+            if self.collision(self.snakeElements[i+1].rect):
+                quit()
+        
 
+    def collision(self, rectangle):
+        return self.head.rect.colliderect(rectangle)
 
     def draw(self, screen):
         self.allsprites.draw(screen)
