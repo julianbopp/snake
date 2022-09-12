@@ -57,7 +57,6 @@ class Snake():
         n = len(self.snakeElements)
         
         for i in range(n-1):
-            print(tmpPos)
             tmp = self.snakeElements[i+1].rect.topleft
             self.snakeElements[i+1].rect.topleft = tmpPos
             tmpPos = tmp
