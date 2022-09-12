@@ -68,8 +68,6 @@ class Snake():
 
     def grow(self):
         newPart = SnakePart()
-        newPart.rect.topleft = self.snakeElements[-1].rect.topleft
-        newPart.rect.move_ip(10, 10)
         self.snakeElements.append(newPart)
         self.allsprites = pg.sprite.RenderPlain(self.snakeElements)
 
