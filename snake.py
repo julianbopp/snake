@@ -1,3 +1,4 @@
+from audioop import reverse
 import pygame as pg
 
 SIZE = (500, 500)
@@ -50,17 +51,20 @@ class Snake():
         self.xspeed = 0
         self.yspeed = 0
 
+    def update(self):
+        tmpPos = self.head.rect.topleft
+        self.head.rect.move_ip(self.xspeed, self.yspeed)
+
+        n = self.snakeElements.__sizeof__
+
+        for i in range(n-2)+1:
+            tmp = self.snakeElements[i].rect.topleft
+            self.snakeElements[i].rect.topleft, = tmpPos
+            tmpPos = tmp
+
 
     def draw(self, screen):
         self.allsprites.draw(screen)
-        self.head.rect.move_ip(self.xspeed, self.yspeed)
-        tmp = self.head
-        for element in self.snakeElements:
-            if element != self.head:
-                element.rect.topleft = tmp.rect.topleft
-                tmp = element
-
-        print(self.snakeElements)
 
     def grow(self):
         newPart = SnakePart()
