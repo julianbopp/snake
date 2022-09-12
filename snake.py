@@ -50,7 +50,6 @@ class Snake():
         self.snakeElements.append(self.head)
         self.snakeElementsPos.append(self.head.rect.topleft)
         self.allsprites = pg.sprite.RenderPlain(self.snakeElements)
-        self.grow()
 
         # speed
         self.xspeed = 0
