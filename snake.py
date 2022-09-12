@@ -55,11 +55,12 @@ class Snake():
         tmpPos = self.head.rect.topleft
         self.head.rect.move_ip(self.xspeed, self.yspeed)
 
-        n = self.snakeElements.__sizeof__
-
-        for i in range(n-2)+1:
-            tmp = self.snakeElements[i].rect.topleft
-            self.snakeElements[i].rect.topleft, = tmpPos
+        n = len(self.snakeElements)
+        
+        for i in range(n-1):
+            print(tmpPos)
+            tmp = self.snakeElements[i+1].rect.topleft
+            self.snakeElements[i+1].rect.topleft = tmpPos
             tmpPos = tmp
 
 
@@ -122,6 +123,7 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
+        snake.update()
         snake.draw(screen)
         pg.display.flip()
 
