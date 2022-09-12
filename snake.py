@@ -1,8 +1,3 @@
-from cmath import rect
-from email.mime import image
-import os
-from tkinter import CENTER
-from turtle import position
 import pygame as pg
 
 SIZE = (500, 500)
