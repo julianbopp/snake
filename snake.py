@@ -1,5 +1,3 @@
-from audioop import reverse
-from curses import KEY_PPAGE
 import pygame as pg
 
 SIZE = (500, 500)
