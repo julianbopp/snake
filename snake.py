@@ -57,6 +57,8 @@ class SnakePart(pg.sprite.Sprite):
 class Snake():
 
     def __init__(self):
+
+        self.startSize = 5
         # create snake head
         self.head = SnakePart()
         self.head.rect.topleft = CENTER
@@ -78,7 +80,13 @@ class Snake():
         self.head.rect.move_ip(self.xspeed, self.yspeed)
 
         n = len(self.snakeElements)
-        
+
+        # make snake grow to initial size without collision and thus not quitting the game
+        if n < self.startSize:
+            if self.xspeed != 0 or self.yspeed != 0:
+                self.grow()
+
+        # update snakeElement positions and check for collision
         for i in range(n-1):
             tmp = self.snakeElements[i+1].rect.topleft
             self.snakeElements[i+1].rect.topleft = tmpPos
