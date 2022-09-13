@@ -24,12 +24,12 @@ class FoodSpawner():
         self.foodEaten = False
 
         # create initial food item
-        self.newFood = Food(random.randint(0,SIZE[0]), random.randint(0,SIZE[1]))
+        self.newFood = Food(round(random.randint(0,SIZE[0])/10)*10, round(random.randint(0,SIZE[1])/10)*10)
         self.foods = pg.sprite.RenderPlain(self.newFood)
 
     def update(self):
         if self.foodEaten:
-            self.newFood = Food(random.randint(0,SIZE[0]), random.randint(0,SIZE[1]))
+            self.newFood = Food(round(random.randint(0,SIZE[0])/10)*10, round(random.randint(0,SIZE[1])/10)*10)
             self.foods = pg.sprite.RenderPlain(self.newFood)
             self.foodEaten = False
     
