@@ -37,7 +37,8 @@ class FoodSpawner():
         self.foods.draw(screen)
 
     def eaten(self, snake):
-        if self.newFood.rect.colliderect(snake.rect):
+        if self.newFood.rect.colliderect(snake.head.rect):
+            snake.grow()
             self.foodEaten = True
         
 
@@ -156,7 +157,7 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
-        foodSpawner.eaten(snake.head)
+        foodSpawner.eaten(snake)
         foodSpawner.update()
         foodSpawner.draw(screen)
         snake.update()
