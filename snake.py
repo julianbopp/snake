@@ -1,13 +1,13 @@
 import pygame as pg
+import random
 
 SIZE = (500, 500)
 CENTER = (SIZE[0]/2, SIZE[1]/2)
 
-class Food():
+class Food(pg.sprite.Sprite):
     
     def __init__(self, xpos, ypos):
-        self.xpos = xpos
-        self.ypos = ypos
+        pg.sprite.Sprite.__init__(self)
 
         self.width = 10
         self.height = 10
@@ -15,6 +15,30 @@ class Food():
         self.image = self.image.convert()
         self.image.fill((255,000,000))
         self.rect = self.image.get_rect()
+        self.rect.topleft = (xpos, ypos)
+
+class FoodSpawner():
+
+    def __init__(self):
+        self.count = 0
+        self.foodEaten = False
+
+        # create initial food item
+        self.newFood = Food(random.randint(0,SIZE[0]), random.randint(0,SIZE[1]))
+        self.foods = pg.sprite.RenderPlain(self.newFood)
+
+    def update(self):
+        if self.foodEaten:
+            self.newFood = Food(random.randint(0,SIZE[0]), random.randint(0,SIZE[1]))
+            self.foods = pg.sprite.RenderPlain(self.newFood)
+            self.foodEaten = False
+    
+    def draw(self, screen):
+        self.foods.draw(screen)
+
+    def eaten(self, snake):
+        if self.newFood.rect.colliderect(snake.rect):
+            self.foodEaten = True
         
 
 
@@ -95,6 +119,7 @@ def main():
 
     # Prepare Game Objects
     snake = Snake();
+    foodSpawner = FoodSpawner()
     clock = pg.time.Clock()
 
     # Main Loop
@@ -123,6 +148,9 @@ def main():
 
         # Draw Everything
         screen.blit(background, (0, 0))
+        foodSpawner.eaten(snake.head)
+        foodSpawner.update()
+        foodSpawner.draw(screen)
         snake.update()
         snake.draw(screen)
         pg.display.flip()
